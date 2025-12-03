@@ -82,12 +82,6 @@
 // 工具函数
 // ================================
 
-// 解决首段缩进问题的空白段
-#let fake-par = {
-  par(box())
-  v(-config.spacing)
-}
-
 // 偏微分符号
 #let pardiff(x, y) = $frac(partial #x, partial #y)$
 
@@ -115,7 +109,6 @@
     width: 100%,
     body,
   )
-  fake-par
 }
 
 // 题目框
@@ -138,7 +131,6 @@
     width: 100%,
     body,
   )
-  fake-par
 }
 
 // 总结框
@@ -248,14 +240,11 @@
 
   // 摘要和关键词
   if abstract != none [
-    #v(2pt)
-    #fake-par
     *摘要：* #abstract
 
     #if keywords != () [
       *关键字：* #keywords.join("；")
     ]
-    #v(2pt)
   ]
 }
 
@@ -272,6 +261,7 @@
   body,
 ) = {
   title-state.update(title)
+  show table: three-line-table
 
   // 文档设置
   set document(author: author, title: title, date: date, keywords: keywords)
@@ -292,7 +282,7 @@
     size: config.text-size,
   )
   set par(
-    first-line-indent: config.indent,
+    first-line-indent: (amount: 2em, all: true),
     justify: true,
     leading: config.leading,
     spacing: config.spacing,
@@ -318,35 +308,20 @@
   // 标题样式
   // ================================
 
-  show heading: it => {
-    set text(font: config.heading-font)
-    let body = if it.numbering != none {
-      counter(heading).display() + h(config.small-space) + it.body
-    } else {
-      it.body
+  show heading: set text(font: config.heading-font)
+  show heading: set block(above: 1.3em, below: 1.3em)
+  show heading: it => block({
+    if it.numbering != none {
+      counter(heading).display() + h(config.small-space)
     }
-    box(width: 100%, body)
-  }
+    it.body
+  })
 
-  show heading.where(level: 1): it => {
-    set align(center)
-    set heading(numbering: "一")
-    set text(config.title1-size)
-    it
-  }
-
-  show heading.where(level: 2): it => {
-    v(-0.75em)
-    set text(config.title2-size)
-    it
-    v(-0.25em)
-  }
-
-  show heading.where(level: 3): it => {
-    v(-1em)
-    set text(config.title3-size)
-    it
-  }
+  show heading.where(level: 1): set align(center)
+  show heading.where(level: 1): set heading(numbering: "一")
+  show heading.where(level: 1): set text(config.title1-size)
+  show heading.where(level: 2): set text(config.title2-size)
+  show heading.where(level: 3): set text(config.title3-size)
 
   // ================================
   // 元素样式
@@ -364,33 +339,22 @@
   }
 
   // 图表样式
-  show figure: it => {
-    set block(breakable: true)
-    set text(font: config.caption-font)
-    it + fake-par
-  }
+  show figure: set text(font: config.caption-font)
   show figure.where(kind: table): set figure.caption(position: top)
-  show table: it => {
-    set text(font: config.body-font)
-    it + fake-par
-  }
-  show image: it => it + fake-par
+  show table: set text(font: config.body-font)
 
   // 列表样式
   show list: it => {
     set list(indent: 0em)
     set enum(indent: 0em)
-    it + fake-par
+    it
   }
   show enum: it => {
     set list(indent: 0em)
     set enum(indent: 0em)
-    it + fake-par
+    it
   }
-  show terms: it => {
-    set text(font: config.caption-font)
-    it + fake-par
-  }
+  show terms: set text(font: config.caption-font)
 
   // 文字样式
   show strong: set text(font: config.strong-font)
@@ -402,27 +366,14 @@
   }
 
   // 代码样式
-  show raw.where(block: false): it => {
-    set text(font: config.raw-font)
-    box(
-      fill: config.raw-color,
-      inset: (x: 3pt, y: 0pt),
-      outset: (x: 0pt, y: 3pt),
-      radius: 2pt,
-      it,
-    )
-  }
-  show raw.where(block: true): it => {
-    set text(font: config.raw-font)
-    set block(
-      width: 100%,
-      fill: config.raw-color,
-      outset: (x: 0pt, y: 4pt),
-      inset: (x: 8pt, y: 4pt),
-      radius: 4pt,
-    )
-    it + fake-par
-  }
+  show raw: set text(font: config.raw-font, size: config.text-size)
+  show raw.where(block: true): set block(
+    width: 100%,
+    fill: luma(245),
+    inset: 10pt,
+    radius: 4pt,
+    stroke: luma(200) + 0.5pt,
+  )
 
   // ================================
   // 文档标题部分
