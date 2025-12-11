@@ -2,6 +2,8 @@
 
 一个基于 [SimplePaper](https://github.com/jinhao-huang/SimplePaper) 改进的 Typst 模板，可用于日常报告/作业等。只需一个文件，无需外置库，使用 Windows 系统内置字体，即可开始创作。
 
+![Star History Chart](https://api.star-history.com/svg?repos=Dawnfz-Lenfeng/easy-paper&type=Date)
+
 ## 快速开始
 
 ### 导入模板

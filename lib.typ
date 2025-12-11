@@ -54,8 +54,8 @@
   emph-font: (font.en_serif, font.zh_kai),
   raw-font: (font.en_code, font.zh_hei),
   // 间距设置
-  spacing: 1.5em,
-  leading: 1.0em,
+  spacing: 1.02em,
+  leading: 1.02em,
   indent: 2em,
   small-space: 1em,
   block-space: 0.75em,
@@ -171,12 +171,15 @@
 #let header-style(heading) = {
   set text(font: config.header-font)
   let title = title-state.get()
-  grid(
-    columns: (1fr, 1fr),
-    align(left, title), align(right, heading),
+  block(
+    width: 100%,
+    stroke: (bottom: 1pt + gray),
+    inset: (bottom: 4pt),
+    grid(
+      columns: (1fr, 1fr),
+      align(left, title), align(right, heading),
+    ),
   )
-  v(-1.2em)
-  line(stroke: 1pt + gray, length: 100%)
 }
 
 #let prev-header = context {
@@ -303,6 +306,7 @@
   )
   set math.equation(numbering: "(1)")
   set underline(evade: false)
+  set bibliography(style: "gb-7714-2015-numeric")
 
   // ================================
   // 标题样式
@@ -317,9 +321,12 @@
     it.body
   })
 
-  show heading.where(level: 1): set align(center)
-  show heading.where(level: 1): set heading(numbering: "一")
-  show heading.where(level: 1): set text(config.title1-size)
+  show heading.where(level: 1): it => {
+    set align(center)
+    set text(config.title1-size)
+    set heading(numbering: "一")
+    it
+  }
   show heading.where(level: 2): set text(config.title2-size)
   show heading.where(level: 3): set text(config.title3-size)
 
