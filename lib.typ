@@ -274,6 +274,7 @@
     numbering: "1",
     number-align: center,
     header: prev-header,
+    header-ascent: config.leading,
   )
 
   // 基础样式设置
