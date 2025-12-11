@@ -211,6 +211,7 @@
   abstract: none,
   keywords: (),
 ) = {
+  set par(spacing: 1.2em, leading: 1.2em)
   // 主标题
   align(center)[
     #block(

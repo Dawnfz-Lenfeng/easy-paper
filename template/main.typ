@@ -21,14 +21,10 @@ EasyPaper@EasyPaper 是基于 SimplePaper@SimplePaper 改进的模板，具有�
 - 无序列表项
   - 嵌套项目
     - 嵌套列表采用不同符号
-
-+ 有序列表：
-  - 混合嵌套
-  - 也不会有影响
 + 第二步
   + 当然你也可以继续嵌套
     + 再嵌套
-  + 嵌套列表也会自动缩进
+  - 也可以混合嵌套
 + 第三步
 
 / 定义: 你还可以定义一个术语，并给出解释。
@@ -74,8 +70,14 @@ $
   sin^2(x) + cos^2(x) = 1
 $
 
-== 表格功能
+== 图表功能
 
+#figure(
+  image("./assets/example.png", width: 80%),
+  caption: [明代永宁宣抚司及永宁卫疆域图],
+) <fig:example>
+
+表格会自动使用三线表格式：
 #figure(
   table(
     columns: 4,
@@ -87,10 +89,6 @@ $
   caption: [实验数据表],
 ) <tab:data>
 
-下面的文字是引用功能，可以引用@eq:partial 和@tab:data。支持外部#link("https://typst.app")[链接]和脚注#footnote[这是脚注内容]。
-
-= 结论
-
-本模板提供了完整的学术写作功能，适用于报告、作业和笔记撰写。主要特色包括题目解答框、三线表格、公式编号和交叉引用等功能。
+下面的文字是引用功能，可以引用@fig:example，@eq:partial 和@tab:data。支持外部#link("https://typst.app")[链接]和脚注#footnote[这是脚注内容]。
 
 #bibliography("ref.bib")
