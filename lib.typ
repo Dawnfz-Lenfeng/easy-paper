@@ -96,6 +96,7 @@
   it,
 ) = {
   set text(font: config.emph-font)
+  set par(first-line-indent: (amount: config.indent, all: false))
   let body = if title != none {
     strong(title) + h(config.block-space) + it
   } else {
@@ -124,6 +125,7 @@
 // 解答框
 #let solution(it) = {
   set enum(numbering: "(1)")
+  set par(first-line-indent: (amount: config.indent, all: false))
   let body = [*解答.*] + h(config.block-space) + it
   block(
     inset: 8pt,
