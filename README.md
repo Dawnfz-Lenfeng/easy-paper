@@ -1,44 +1,23 @@
 # easy-paper
 
+[![Typst Package](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDawnfz-Lenfeng%2Feasy-paper%2Fmaster%2Ftypst.toml&query=%24.package.version&prefix=v&logo=typst&label=package&color=239dad)](https://typst.app/universe/package/easy-paper)
+![GitHub Repo stars](https://img.shields.io/github/stars/Dawnfz-Lenfeng/easy-paper?style=flat&logo=github)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Typst](https://img.shields.io/badge/built%20with-Typst-239dad.svg)
+
+A ready-to-use Typst template for Chinese papers.
+
 一个基于 [SimplePaper](https://github.com/jinhao-huang/SimplePaper) 改进的 Typst 模板，可用于日常报告/作业等。只需一个文件，无需外置库，使用 Windows 系统内置字体，即可开始创作。
 
 ![Star History Chart](https://api.star-history.com/svg?repos=Dawnfz-Lenfeng/easy-paper&type=Date)
 
 ## 快速开始
 
-### 导入模板
-
-#### 方法一：
-
-可以直接将 `lib.typ` 文件复制到你的项目根目录。然后在你的 Typst 文件顶部导入模板。
+### 从官方包导入
 
 ```typst
-#import "/lib.typ": *
-```
+#import "@preview/easy-paper:0.2.0": *
 
-#### 方法二：
-
-参考 [Typst 文档](https://github.com/typst/packages/blob/main/README.md)，可以安装本地包，以便在不同项目中使用：
-
-```bash
-git clone https://github.com/Dawnfz-Lenfeng/easy-paper.git {data-dir}/typst/packages/local/easy-paper/0.1.0
-```
-
-这里的 `{data-dir}` 是：
-
-- Linux： `$XDG_DATA_HOME` 或 `~/.local/share`
-- macOS： `~/Library/Application Support`
-- Windows： `%APPDATA%`，即 `C:/Users/<用户名>/AppData/Roaming`
-
-然后使用：
-
-```typst
-#import "@local/easy-paper:0.1.0": *
-```
-
-### 使用模板
-
-```typst
 #show: project.with(
   title: "文档标题",
   author: "作者姓名",
@@ -50,13 +29,31 @@ git clone https://github.com/Dawnfz-Lenfeng/easy-paper.git {data-dir}/typst/pack
 )
 ```
 
-或者在安装本地包后直接使用 Typst-CLI 初始化：
-
+或者直接使用 Typst-CLI 初始化：
 ```bash
-typst init @local/easy-paper:0.1.0
+typst init @preview/easy-paper
 ```
 
-## 使用说明
+### 本地导入
+
+
+得益于单文件设计，你可以直接下载 lib.typ 文件并将其放置在项目根目录。这种方式特别适合以下场景：
+
+- **更新即时**：无需等待官方包库 (Package Registry) 同步，直接使用仓库最新代码。
+- **深度 DIY**：你可以直接修改本地的 lib.typ 源码，进行深度的自定义配置，满足更换字体等特定的排版需求。
+
+```bash
+# Linux / macOS
+curl -O https://raw.githubusercontent.com/Dawnfz-Lenfeng/easy-paper/refs/heads/master/lib.typ
+
+# Windows (CMD 或 PowerShell)
+curl.exe -O https://raw.githubusercontent.com/Dawnfz-Lenfeng/easy-paper/refs/heads/master/lib.typ
+```
+
+然后在你的 Typst 文件顶部导入模板：
+```typst
+#import "lib.typ": *
+```
 
 ### 学术组件
 
@@ -85,9 +82,7 @@ typst init @local/easy-paper:0.1.0
 
 **三线表格：**
 ```typst
-#show table: three-line-table // 启用三线表格样式
-
-// 然后正常使用 table 即可
+// 默认启用三线表格式
 #figure(
   table(
       columns: 3,
@@ -151,8 +146,8 @@ Windows 大部分字体已内置，macOS/Linux 可能需要额外安装中文字
 
 ## 效果展示
 
-![](./assets/output-1.png)
-![](./assets/output-2.png)
+![page1](./assets/output-1.png)
+![page2](./assets/output-2.png)
 
 ## 致谢
 
