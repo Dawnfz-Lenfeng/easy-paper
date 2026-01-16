@@ -13,8 +13,6 @@ A ready-to-use Typst template for Chinese papers.
 
 ## 快速开始
 
-### 从官方包导入
-
 ```typst
 #import "@preview/easy-paper:0.2.0": *
 
@@ -32,27 +30,6 @@ A ready-to-use Typst template for Chinese papers.
 或者直接使用 Typst-CLI 初始化：
 ```bash
 typst init @preview/easy-paper
-```
-
-### 本地导入
-
-
-得益于单文件设计，你可以直接下载 lib.typ 文件并将其放置在项目根目录。这种方式特别适合以下场景：
-
-- **更新即时**：无需等待官方包库 (Package Registry) 同步，直接使用仓库最新代码。
-- **深度 DIY**：你可以直接修改本地的 lib.typ 源码，进行深度的自定义配置，满足更换字体等特定的排版需求。
-
-```bash
-# Linux / macOS
-curl -O https://raw.githubusercontent.com/Dawnfz-Lenfeng/easy-paper/refs/heads/master/lib.typ
-
-# Windows (CMD 或 PowerShell)
-curl.exe -O https://raw.githubusercontent.com/Dawnfz-Lenfeng/easy-paper/refs/heads/master/lib.typ
-```
-
-然后在你的 Typst 文件顶部导入模板：
-```typst
-#import "lib.typ": *
 ```
 
 ### 学术组件
@@ -125,11 +102,30 @@ $ frac(partial f, partial x) = pardiff(f, x) $
 
 Windows 大部分字体已内置，macOS/Linux 可能需要额外安装中文字体。
 
-如需使用其他字体，请修改模板中的字体配置。
+如需使用其他字体，请使用自定义配置覆盖默认字体设置。
 
 ### 自定义设置
 
-模板中提供了一些自定义设置，如字体、字号、段间距等。可根据需求自行修改 `lib.typ` 中 `config` 配置。
+模板支持通过 `project` 函数的 `config` 参数进行自定义配置，覆盖默认设置：
+
+```typst
+#show: project.with(
+  title: "我的文档",
+  author: "作者",
+  abstract: [摘要...],
+  keywords: ("关键词",),
+  // 在这里自定义配置，覆盖默认值
+  config: (
+    text-size: 12pt,        // 修改正文字号
+    title-size: 20pt,       // 修改标题字号
+    indent: 0em,            // 取消首行缩进
+    heading-font: ("My Font", "SimHei"), // 自定义标题字体
+    // ... 其他配置项
+  ),
+)
+```
+
+可配置项如下表所示：
 
 | 配置项      | 默认值        | 说明         |
 | ----------- | ------------- | ------------ |
@@ -139,6 +135,9 @@ Windows 大部分字体已内置，macOS/Linux 可能需要额外安装中文字
 | title1-size | 15pt (小三)   | 一级标题字号 |
 | title2-size | 14pt (四号)   | 二级标题字号 |
 | title3-size | 12pt (小四)   | 三级标题字号 |
+| title-font  | (Serif, Hei)  | 标题字体     |
+| author-font | (Sans, Song)  | 作者字体     |
+| body-font   | (Serif, Song) | 正文字体     |
 | spacing     | 1.5em         | 段间距       |
 | leading     | 1.0em         | 行间距       |
 | indent      | 2em           | 缩进         |
