@@ -202,15 +202,35 @@
   )
 }
 
-#let prev-header = context {
-  let config = config-state.get()
-  let headings = query(heading.where(level: 1).before(here()))
-  if headings.len() == 0 {
-    return
+#let current-header = context {
+  let cur-page = here().page()
+  let all-headings = query(heading.where(level: 1))
+  if all-headings.len() == 0 { return }
+
+  let on-page = all-headings.filter(h => h.location().page() == cur-page)
+  let before-page = all-headings.filter(h => h.location().page() < cur-page)
+
+  let target-heading = none
+
+  if on-page.len() > 0 {
+    target-heading = on-page.first()
+  } else if before-page.len() > 0 {
+    target-heading = before-page.last()
   }
-  let level = counter(heading.where(level: 1)).display("一")
-  let heading = level + h(config.small-space) + headings.last().body
-  header-style(heading, config)
+
+  if target-heading != none {
+    let heading-text = ""
+
+    if target-heading.numbering != none {
+      let num = counter(heading).at(target-heading.location()).first()
+      let level = numbering("一", num)
+      heading-text = level + h(config.small-space) + target-heading.body
+    } else {
+      heading-text = target-heading.body
+    }
+
+    header-style(heading-text)
+  }
 }
 
 #let next-header = context {
@@ -300,7 +320,7 @@
   set page(
     numbering: "1",
     number-align: center,
-    header: prev-header,
+    header: current-header,
     header-ascent: config.leading,
   )
 
