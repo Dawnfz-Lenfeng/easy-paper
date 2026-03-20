@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/Dawnfz-Lenfeng/easy-paper/compare/v0.2.0...v0.2.1) (2026-03-20)
+
+
+### Features
+
+* add custom config ([63a9f4f](https://github.com/Dawnfz-Lenfeng/easy-paper/commit/63a9f4f70b6ee557b7ba668d64a3687dcb09891d))
+
+
+### Bug Fixes
+
+* **header:** improve header title display logic ([f801432](https://github.com/Dawnfz-Lenfeng/easy-paper/commit/f801432cc4fb69fcde8d95b32ba51109200138a3))
+
 ## [0.2.0](https://github.com/Dawnfz-Lenfeng/easy-paper/compare/v0.1.0...v0.2.0) (2026-01-16)
 
 
