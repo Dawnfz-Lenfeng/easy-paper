@@ -315,7 +315,10 @@
   // 基础样式设置
   set heading(numbering: "1.1")
   set text(
-    font: config.body-font,
+    font: (
+      (name: font.en_serif, covers: "latin-in-cjk"),
+      font.zh_shusong,
+    ),
     lang: "zh",
     region: "cn",
     size: config.text-size,
