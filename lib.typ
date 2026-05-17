@@ -69,6 +69,9 @@
   // 表格样式
   table-stroke: 0.08em,
   table-header-stroke: 0.05em,
+  // 页码样式
+  page-numbering: "1",
+  page-number-align: center,
 )
 
 #let config-state = state("easy-paper-config", default-config)
@@ -306,8 +309,8 @@
 
   // 页面设置
   set page(
-    numbering: "1",
-    number-align: center,
+    numbering: config.page-numbering,
+    number-align: config.page-number-align,
     header: current-header,
     header-ascent: config.leading,
   )
