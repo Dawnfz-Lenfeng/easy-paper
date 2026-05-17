@@ -161,6 +161,9 @@ Windows 大部分字体已内置，macOS/Linux 可能需要额外安装中文字
 | enum-numbering      | ("1.", "(1)", "①", "a.") | 有序列表编号   |
 | table-stroke        | 0.08em                   | 表格边框粗细   |
 | table-header-stroke | 0.05em                   | 表头边框粗细   |
+| **页码样式**        |                          |                |
+| page-numbering      | "1"                      | 页码编号格式   |
+| page-number-align   | center                   | 页码对齐方式   |
 
 ## 效果展示
 
