@@ -1,6 +1,6 @@
 [package]
 name = "easy-paper"
-version = "0.2.1"
+version = "0.2.2"
 entrypoint = "lib.typ"
 authors = ["Dawnfz-Lenfeng <https://github.com/Dawnfz-Lenfeng>"]
 license = "MIT"
