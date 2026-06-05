@@ -1,0 +1,76 @@
+name: Publish to Typst Packages
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract info
+        id: info
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          PACKAGE_NAME=$(grep '^name = ' typst.toml | sed 's/name = "\(.*\)"/\1/')
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "package=$PACKAGE_NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Setup gh
+        env:
+          GH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
+        run: |
+          echo "${{ secrets.PACKAGES_TOKEN }}" | gh auth login --with-token
+          gh repo fork typst/packages --clone=false 2>/dev/null || true
+
+      - name: Prepare package
+        run: |
+          VERSION="${{ steps.info.outputs.version }}"
+          PACKAGE_NAME="${{ steps.info.outputs.package }}"
+          PKG_DIR="packages/preview/${PACKAGE_NAME}/${VERSION}"
+          BRANCH="${PACKAGE_NAME}-${VERSION}"
+
+          git clone --filter=blob:none --sparse https://github.com/typst/packages.git /tmp/packages
+          cd /tmp/packages
+          git sparse-checkout set "packages/preview/${PACKAGE_NAME}"
+
+          mkdir -p "$PKG_DIR"
+
+          cd "$GITHUB_WORKSPACE"
+          cp typst.toml lib.typ CHANGELOG.md LICENSE README.md "/tmp/packages/$PKG_DIR/"
+
+          for dir in assets logos src docs; do
+            [ -d "$dir" ] && cp -r "$dir" "/tmp/packages/$PKG_DIR/"
+          done
+
+          cp -r template "/tmp/packages/$PKG_DIR/"
+
+          sed -i "s|#import \"../lib.typ\":|#import \"@preview/${PACKAGE_NAME}:${VERSION}\":|" \
+            "/tmp/packages/$PKG_DIR/template/main.typ"
+
+          THUMBNAIL_SRC=$(grep '^thumbnail = ' typst.toml | sed 's/thumbnail = "\(.*\)"/\1/')
+          if [ "$THUMBNAIL_SRC" != "thumbnail.png" ]; then
+            cp "$THUMBNAIL_SRC" "/tmp/packages/$PKG_DIR/thumbnail.png"
+            sed -i "s|thumbnail = \".*\"|thumbnail = \"thumbnail.png\"|" \
+              "/tmp/packages/$PKG_DIR/typst.toml"
+          fi
+
+          cd /tmp/packages
+          git checkout -b "$BRANCH"
+          git add "$PKG_DIR"
+          git commit -m "Add ${PACKAGE_NAME} ${VERSION}"
+          git remote add fork "https://x-access-token:${{ secrets.PACKAGES_TOKEN }}@github.com/${{ github.repository_owner }}/packages.git"
+          git push fork "$BRANCH"
+
+          gh pr create \
+            --repo typst/packages \
+            --head "${{ github.repository_owner }}:${BRANCH}" \
+            --base main \
+            --title "Add ${PACKAGE_NAME} ${VERSION}" \
+            --body "Update ${PACKAGE_NAME} to version ${VERSION}."
+
+        env:
+          GH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
