@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.2](https://github.com/Dawnfz-Lenfeng/easy-paper/compare/v0.2.0...v0.2.2) (2026-06-05)
+
+
+### Features
+
+* add custom config ([63a9f4f](https://github.com/Dawnfz-Lenfeng/easy-paper/commit/63a9f4f70b6ee557b7ba668d64a3687dcb09891d))
+* Add page number styles settings ([#8](https://github.com/Dawnfz-Lenfeng/easy-paper/issues/8)) ([fd0e80f](https://github.com/Dawnfz-Lenfeng/easy-paper/commit/fd0e80f0c22fafd501f117a80dbabf6c3df2828d))
+
+
+### Bug Fixes
+
+* fix quotation marks font fallback in CJK-Latin mixed text ([#7](https://github.com/Dawnfz-Lenfeng/easy-paper/issues/7)) ([1e5f199](https://github.com/Dawnfz-Lenfeng/easy-paper/commit/1e5f1992ed0d153a2d4a3af20fc68fed680b88e4))
+* **header:** improve header title display logic ([f801432](https://github.com/Dawnfz-Lenfeng/easy-paper/commit/f801432cc4fb69fcde8d95b32ba51109200138a3))
+
 ### [0.2.1](https://github.com/Dawnfz-Lenfeng/easy-paper/compare/v0.2.0...v0.2.1) (2026-03-20)
 
 
