@@ -265,15 +265,17 @@
     align(center, author)
   }
 
-  // 日期
+  // 日期：auto 取当天，datetime 按默认格式显示，其余类型（字符串、content）原样显示
   if date != none {
-    date = if date == auto {
+    let shown = if type(date) == datetime {
+      date.display("[year]年[month]月[day]日")
+    } else if date == auto {
       datetime.today().display("[year]年[month]月[day]日")
     } else {
       date
     }
     set text(config.author-size, font: config.author-font)
-    align(center, date)
+    align(center, shown)
   }
 
   // 摘要和关键词
@@ -305,7 +307,13 @@
   show table: three-line-table.with(config: config)
 
   // 文档设置
-  set document(author: author, title: title, date: date, keywords: keywords)
+  // 元数据只接受 datetime / none / auto，其余日期表示仅用于标题页显示
+  let doc-date = if type(date) == datetime or date == auto or date == none {
+    date
+  } else {
+    none
+  }
+  set document(author: author, title: title, date: doc-date, keywords: keywords)
 
   // 页面设置
   set page(

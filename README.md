@@ -30,6 +30,34 @@ A ready-to-use Typst template for Chinese papers.
 typst init @preview/easy-paper
 ```
 
+### 日期
+
+`date` 支持四种写法：
+
+```typst
+// 当天，显示为「2026年10月23日」
+#show: project.with(title: "标题", author: "作者", date: auto)
+
+// 指定日期，按默认格式显示
+#show: project.with(
+  title: "标题",
+  author: "作者",
+  date: datetime(year: 2026, month: 10, day: 23),
+)
+
+// 自定义格式，传入已格式化的 content
+#show: project.with(
+  title: "标题",
+  author: "作者",
+  date: datetime(year: 2026, month: 10, day: 23).display("[year]-[month]-[day]"),
+)
+
+// 字符串或 content，原样显示
+#show: project.with(title: "标题", author: "作者", date: "2026-10-23")
+```
+
+省略 `date` 时不显示日期。
+
 ### 学术组件
 
 在原有模板的基础上，一共有以下学术组件，以供基本日常笔记使用。
